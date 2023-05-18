@@ -1,5 +1,8 @@
 # Project made by: Kuldeep Singh
-# Student at LNMIIT,Jaipur,India
+# Student at LNMIIT,Jaipur,India;
+
+# Typos, python3 etc fixes and further dev by:
+# Jukka Valvanne
 
 # import Statements
 import calendar
@@ -47,7 +50,7 @@ class Status(BoxLayout, EventDispatcher):
 # class for select.kv file
 class Select(BoxLayout):
     n = ListProperty()
-    year_1_ = ObjectProperty(None)
+    year_1 = ObjectProperty(None)
     year_2 = ObjectProperty(None)
     lbl_ = ObjectProperty(None)
     btn = ObjectProperty(None)
@@ -65,7 +68,7 @@ class Select(BoxLayout):
                 else:
                     self.n.append(str(i))
         self.count = 1
-        self.year_1_.values = self.n
+        self.year_1.values = self.n
         self.year_2.values = self.n
 
 
