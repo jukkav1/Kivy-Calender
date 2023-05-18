@@ -27,9 +27,9 @@ Builder.load_file("days.kv")
 
 
 # class for calender.kv file
-class Calender(BoxLayout):
+class Calendar(BoxLayout):
     def __init__(self, **kwargs):
-        super(Calender, self).__init__(**kwargs)
+        super(Calendar, self).__init__(**kwargs)
 
 
 # ------------------------------------------------------------------------------------------------#
@@ -170,7 +170,7 @@ class mainApp(App):
         self.title = "Kivy-Calendar"
         self.load_kv("calender.kv")
         Clock.schedule_interval(self.update, 1)
-        return Calender()
+        return Calendar()
 
 
 # BoilerPlate
