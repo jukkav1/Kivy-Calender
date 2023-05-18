@@ -115,7 +115,11 @@ class Dates(GridLayout):
     def __init__(self, **kwargs):
         super(Dates, self).__init__(**kwargs)
         self.cols = 7
-        self.c = calendar.monthcalendar(2015, 5)
+
+        # Kalenteri näyttää lähtökohtaisesti kuluvan kuun kalenteria
+        self.c = calendar.monthcalendar(
+            datetime.datetime.now().year, datetime.datetime.now().month
+        )
         for i in self.c:
             for j in i:
                 if j == 0:
@@ -168,7 +172,7 @@ class mainApp(App):
 
     def build(self):
         self.title = "Kivy-Calendar"
-        self.load_kv("calender.kv")
+        self.load_kv("calendar.kv")
         Clock.schedule_interval(self.update, 1)
         return Calendar()
 
