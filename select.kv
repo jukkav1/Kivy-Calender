@@ -1,33 +1,23 @@
 #:kivy 2.1.0
 <Select>:
-	lbl_: lbl
+	lbl: lbl
 	btn: btn
-	year_1: year_1
-	year_2: year_2
+	year: year
 	
 	Label:
 		id: lbl
-		text:'Select Year :'
+		text:'Valitse vuosi:'
 		
 	Spinner:
-		id: year_1
+		id: year
 		size_hint: .1,1
-		halign: 'right'
+		halign: 'center'
 		valign: 'middle'
 		text_size: self.size
-		text:'00'
+		text: '2023'
 		on_press: root.get_years()
 		
-	Spinner:
-		id: year_2
-		size_hint: .1,1
-		halign: 'left'
-		valign: 'middle'
-		text_size: self.size
-		text:'00'
-		on_press: root.get_years()
 	Button:
 		id: btn
-		text:'Go!'
-		on_press: lbl.text = 'Selected Year : '
-		on_release: lbl.text = lbl.text + year_1.text+year_2.text
+		text:'Aseta'
+		on_release: lbl.text = f'Valittu vuosi: {year.text}'
