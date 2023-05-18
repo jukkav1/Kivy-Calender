@@ -4,7 +4,7 @@
 # Typos, python3 etc fixes and further dev by:
 # Jukka Valvanne
 
-# import Statements
+# import statements
 import calendar
 import time
 import datetime
@@ -18,7 +18,6 @@ from kivy.properties import StringProperty
 from kivy.clock import Clock
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
-from kivy.event import EventDispatcher
 from kivy.uix.textinput import TextInput
 
 # Builder used to load all the kivy files to be loaded in the main.py file
@@ -39,7 +38,7 @@ class Calendar(BoxLayout):
 
 
 # class for status.kv file
-class Status(BoxLayout, EventDispatcher):
+class Status(BoxLayout):
     def __init__(self, **kwargs):
         super(Status, self).__init__(**kwargs)
 
@@ -49,10 +48,9 @@ class Status(BoxLayout, EventDispatcher):
 
 # class for select.kv file
 class Select(BoxLayout):
-    n = ListProperty()
-    year_1 = ObjectProperty(None)
-    year_2 = ObjectProperty(None)
-    lbl_ = ObjectProperty(None)
+    number = ListProperty()
+    year = ObjectProperty(None)
+    lbl = ObjectProperty(None)
     btn = ObjectProperty(None)
     global count
 
@@ -61,15 +59,12 @@ class Select(BoxLayout):
         self.count = 0
 
     def get_years(self):
+        """Tää on outo härveli."""
         if self.count == 0:
-            for i in range(0, 100):
-                if i < 10:
-                    self.n.append("0" + str(i))
-                else:
-                    self.n.append(str(i))
+            for _ in range(2000, 2050):
+                self.number.append(str(_))
         self.count = 1
-        self.year_1.values = self.n
-        self.year_2.values = self.n
+        self.year.values = self.number
 
 
 # ------------------------------------------------------------------------------------------------#
@@ -79,36 +74,19 @@ class Select(BoxLayout):
 class Reminder(BoxLayout):
     def __init__(self, **kwargs):
         super(Reminder, self).__init__(**kwargs)
-
         self.orientation = "vertical"
-        self.add_widget(TextInput())
+        self.textbox = TextInput()
         self.b = BoxLayout(orientation="horizontal", size_hint=(1, 0.15))
+        self.add_widget(self.textbox)
         self.add_widget(self.b)
-        self.b.add_widget(Button(on_release=self.on_release, text="OK!"))
+        self.b.add_widget(Button(on_release=self.on_release, text="Tallenna"))
+        pass
 
-    def on_release(self, event):
-        print("OK clicked!")
+    def on_release(self, e):
+        print("Yritetty tallentaa", self.textbox.text)
 
 
 # ------------------------------------------------------------------------------------------------#
-"""
-class get_months(GridLayout):
-    def __init__(self,c,**kwargs):
-        super(get_months,self).__init__(**kwargs)
-        self.cols = 7
-        self.c  = calendar.monthcalendar(2015,5)
-        for i in self.c:
-            for j in i:
-                if j == 0:
-                    self.add_widget(Button(on_release = self.on_release,text = '{j}'.format(j='')))
-                else:
-                    self.add_widget(Button(on_release = self.on_release, text = '{j}'.format(j=j)))
-    
-    def on_release(self,args):
-        pass
-        
-        
-"""
 
 
 # class for dates.kv file
@@ -120,9 +98,8 @@ class Dates(GridLayout):
         self.cols = 7
 
         # Kalenteri näyttää lähtökohtaisesti kuluvan kuun kalenteria
-        self.c = calendar.monthcalendar(
-            datetime.datetime.now().year, datetime.datetime.now().month
-        )
+        self.c = calendar.monthcalendar(self.now.year, self.now.month)
+
         for i in self.c:
             for j in i:
                 if j == 0:
@@ -138,14 +115,15 @@ class Dates(GridLayout):
         pass
 
     def on_dismiss(self, arg):
+        print("Dismissed :()")
         # Do something on close of popup
         pass
 
     def on_release(self, event):
-        print("date clicked :" + event.text)
+        print("Valittu päivä: " + event.text)
         event.background_color = 1, 0, 0, 1
         self.popup = Popup(
-            title="Set Reminder :",
+            title="Tee merkintä",
             content=Reminder(),
             size_hint=(None, None),
             size=(self.width * 3 / 4, self.height),
