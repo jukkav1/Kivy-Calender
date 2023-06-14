@@ -28,7 +28,7 @@ Builder.load_file("status.kv")
 Builder.load_file("days.kv")
 
 
-# class for calender.kv file
+# class for calendar.kv file
 class Calendar(BoxLayout):
     def __init__(self, **kwargs):
         super(Calendar, self).__init__(**kwargs)
